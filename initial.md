@@ -194,7 +194,7 @@ If you're unsure about any step in the workflow:
 ```
 main.ino
 module-1/
-  ├── process-1.ino
+  ├── process-1.cpp
   └── utils.h
 module-2/
   └── ...
