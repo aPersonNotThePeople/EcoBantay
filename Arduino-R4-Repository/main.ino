@@ -5,38 +5,19 @@ void setup() {
   Serial.begin(115200);
   delay(1000);
   
-  Serial.println("\n=== Water Trash Collector - Sorting System ===");
+  Serial.println("\n=== TASK 1: Sorting Motor Test ===");
   
-  initMetalDetector();
-  initMotorSystem();
+  initSortingMotor();
   
-  Serial.println("\nSystem Ready - Waiting for trash detection...\n");
+  Serial.println("\nCommands:");
+  Serial.println("  r - Sort RIGHT (metal bin)");
+  Serial.println("  l - Sort LEFT (non-metal bin)");
+  Serial.println("  s - STOP motor");
+  Serial.println("  t - Run motor TEST\n");
 }
 
 void loop() {
-  switch (currentState) {
-    case IDLE:
-      handleIdle();
-      break;
-      
-    case DETECTING:
-      handleDetecting();
-      break;
-      
-    case SORT_METAL:
-      handleSortMetal();
-      break;
-      
-    case SORT_NON_METAL:
-      handleSortNonMetal();
-      break;
-      
-    case RETURNING:
-      handleReturning();
-      break;
-  }
-  
-  if (millis() % 500 < 10) {
-    printStatus();
-  }
+  if (Serial.available() > 0) {
+        testSortingMotor();
+    }
 }
