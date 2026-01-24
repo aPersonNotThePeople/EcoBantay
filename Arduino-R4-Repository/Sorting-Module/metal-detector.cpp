@@ -1,9 +1,9 @@
 #include "utils.h"
 
-//inductive proximity sensor pin
-const int INDUCTIVE_PROXIMITY_SENSOR_PIN = A0;//change depending on value
+//pin definitions
+const int INDUCTIVE_PROXIMITY_SENSOR_PIN = A0;
 
-//detecting thresholds
+//detection thresholds
 const int METAL_THRESHOLD = 500;
 const int OBJECT_THRESHOLD = 100;
 

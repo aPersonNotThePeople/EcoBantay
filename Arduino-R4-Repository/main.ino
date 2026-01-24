@@ -5,40 +5,38 @@ void setup() {
   Serial.begin(115200);
   delay(1000);
   
-  Serial.println("\n=== TASK 2: Motor + Metal Detector Test ===");
+  Serial.println("\n=== Water Trash Collector - Sorting System ===");
   
-  initMotorSystem();
   initMetalDetector();
+  initMotorSystem();
+  
+  Serial.println("\nSystem Ready - Waiting for trash detection...\n");
 }
 
 void loop() {
-  //read sensor
-  int sensorValue = readProximitySensor();
-  
-  static unsigned long lastPrint = 0;
-  if (millis() - lastPrint > 500) {
-    Serial.print("Sensor: ");
-    Serial.print(sensorValue);
-    
-    if (isMetalDetected(sensorValue)) {
-      Serial.println(" - METAL detected! Moving RIGHT");
-      motorRight(200);
-    } else if (isObjectDetected(sensorValue)) {
-      Serial.println(" - NON-METAL detected! Moving LEFT");
-      motorLeft(200);
-    } else {
-      Serial.println(" - No object");
-      stopMotor();
-    }
-    
-    lastPrint = millis();
+  switch (currentState) {
+    case IDLE:
+      handleIdle();
+      break;
+      
+    case DETECTING:
+      handleDetecting();
+      break;
+      
+    case SORT_METAL:
+      handleSortMetal();
+      break;
+      
+    case SORT_NON_METAL:
+      handleSortNonMetal();
+      break;
+      
+    case RETURNING:
+      handleReturning();
+      break;
   }
   
-  //stop command for testing
-  if (Serial.available() > 0) {
-    char cmd = Serial.read();
-    if (cmd == 's') {
-      stopMotor();
-    }
+  if (millis() % 500 < 10) {
+    printStatus();
   }
 }
