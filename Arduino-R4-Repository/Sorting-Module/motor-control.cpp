@@ -44,22 +44,3 @@ void stopMotor() {
   analogWrite(MOTOR_PWM, 0);
   Serial.println("Motor STOPPED");
 }
-
-
-//only for testing
-void testMotors() {
-  Serial.println("\n=== Testing Motors ===");
-  
-  Serial.println("Testing RIGHT direction...");
-  motorRight(DEFAULT_SPEED);
-  delay(2000);
-  stopMotor();
-  delay(1000);
-  
-  Serial.println("Testing LEFT direction...");
-  motorLeft(DEFAULT_SPEED);
-  delay(2000);
-  stopMotor();
-  
-  Serial.println("Motor test complete!\n");
-}

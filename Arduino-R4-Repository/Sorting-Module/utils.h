@@ -3,11 +3,16 @@
 
 #include <Arduino.h>
 
-// Motor Control Functions
+//motor controls
 void initMotorSystem();
 void motorRight(int speed);
 void motorLeft(int speed);
 void stopMotor();
-void testMotors();
+
+//metal detector
+void initMetalDetector();
+int readProximitySensor();
+bool isMetalDetected(int sensorValue);
+bool isObjectDetected(int sensorValue);
 
 #endif
