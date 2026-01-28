@@ -6,39 +6,41 @@
 //system states
 enum SortState {
   IDLE,
+  CONVEYOR_RUNNING,
+  TRASH_DETECTED,
   SCANNING_METAL,
   SORT_METAL,
   SORT_NON_METAL,
   RETURNING
 };
 
-// Global Variables
+//global variables
 extern SortState currentState;
 extern unsigned long stateStartTime;
 extern bool metalDetected;
 
-//motor control module
+//ultrasonic
+void initUltrasonicSensor();
+float readDistance();
+bool isTrashInPosition();
+
+//metel detection
+void initMetalDetector();
+int readProximitySensor();
+bool isMetalDetected(int sensorValue);
+
+//conveyor motor
+void initConveyorSystem();
+void conveyorStart();
+void conveyorStop();
+
+//sorting motor
 void initSortingMotor();
 void sortMotorRight(int speed);
 void sortMotorLeft(int speed);
 void sortMotorStop();
 
-//conveyor modules
-void initConveyorSystem();
-void conveyorStart();
-void conveyorStop();
-
-//ultrasonic module
-void initUltrasonicSensor();
-float readDistance();
-bool isTrashInPosition();
-
-//metal detect module
-void initMetalDetector();
-int readProximitySensor();
-bool isMetalDetected(int sensorValue);
-
-//sorting system module
+//sorting system
 void handleIdle();
 void handleConveyorRunning();
 void handleTrashDetected();
