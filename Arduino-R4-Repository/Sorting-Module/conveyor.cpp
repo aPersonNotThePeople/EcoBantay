@@ -1,6 +1,6 @@
 #include "utils.h"
 
-//conveyor pin definitions
+//conveyor pins
 const int CONV1_IN1 = 2;
 const int CONV1_IN2 = 3;
 const int CONV1_PWM = 5;
