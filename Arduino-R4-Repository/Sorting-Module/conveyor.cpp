@@ -11,7 +11,7 @@ const int CONV2_PWM = 6;
 
 const int CONV3_IN1 = A1;
 const int CONV3_IN2 = A2;
-const int CONV3_PWM = 11;
+const int CONV3_PWM = 11;  // fixed: was pin 12 which is NOT a PWM pin. Valid PWM pins: 3,5,6,9,10,11
 
 const int CONVEYOR_SPEED = 180;
 
