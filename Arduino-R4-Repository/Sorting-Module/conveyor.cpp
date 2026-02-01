@@ -9,9 +9,9 @@ const int CONV2_IN1 = 4;
 const int CONV2_IN2 = 7;
 const int CONV2_PWM = 6;
 
-const int CONV3_IN1 = 10;
-const int CONV3_IN2 = 11;
-const int CONV3_PWM = 12;
+const int CONV3_IN1 = A1;
+const int CONV3_IN2 = A2;
+const int CONV3_PWM = 11;
 
 const int CONVEYOR_SPEED = 180;
 

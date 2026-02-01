@@ -6,13 +6,15 @@
 //system states
 enum SortState {
   IDLE,
+  CONVEYOR_RUNNING,
+  TRASH_DETECTED,
   SCANNING_METAL,
   SORT_METAL,
   SORT_NON_METAL,
   RETURNING
 };
 
-// Global Variables
+//global
 extern SortState currentState;
 extern unsigned long stateStartTime;
 extern bool metalDetected;

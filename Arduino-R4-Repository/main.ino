@@ -5,42 +5,57 @@ void setup() {
   Serial.begin(115200);
   delay(1000);
   
-  Serial.println("\n=== TASK 2: Sorting Motor + Metal Detection ===");
+  Serial.println("\n=== Trash Sorting System ===\n");
   
   initSortingMotor();
+  initConveyorSystem();
+  initUltrasonicSensor();
   initMetalDetector();
   
-  Serial.println("\nSystem will automatically sort based on metal detection");
-  Serial.println("Place objects near the sensor to test");
-  Serial.println("\nCommands:");
-  Serial.println("  s - STOP motor\n");
+  Serial.println("\nAll modules initialized. Starting sorting system...\n");
 }
 
 void loop() {
-  //read sensor
-  int sensorValue = readProximitySensor();
-  
-  //sort baesed on detection
-  if (isMetalDetected(sensorValue)) {
-    sortMotorRight(200);
-  } else {
-    sortMotorLeft(200);
+  // run the state machine
+  switch (currentState) {
+    case IDLE:
+      handleIdle();
+      break;
+    case CONVEYOR_RUNNING:
+      handleConveyorRunning();
+      break;
+    case TRASH_DETECTED:
+      handleTrashDetected();
+      break;
+    case SCANNING_METAL:
+      handleScanningMetal();
+      break;
+    case SORT_METAL:
+      handleSortMetal();
+      break;
+    case SORT_NON_METAL:
+      handleSortNonMetal();
+      break;
+    case RETURNING:
+      handleReturning();
+      break;
   }
-  
-  //print status
+
+  // print status every 1 second
   static unsigned long lastPrint = 0;
-  if (millis() - lastPrint > 500) {
-    Serial.print("Metal Sensor: ");
-    Serial.print(sensorValue);
-    Serial.println(isMetalDetected(sensorValue) ? " - METAL detected!" : " - Non-metal");
+  if (millis() - lastPrint > 1000) {
+    printStatus();
     lastPrint = millis();
   }
-  
-  //check for stop command
+
+  // serial command: 's' to emergency stop everything
   if (Serial.available() > 0) {
     char cmd = Serial.read();
     if (cmd == 's') {
+      conveyorStop();
       sortMotorStop();
+      currentState = IDLE;
+      Serial.println("\n>>> EMERGENCY STOP <<<\n");
     }
   }
 }
