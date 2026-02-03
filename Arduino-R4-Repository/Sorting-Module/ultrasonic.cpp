@@ -1,59 +1,21 @@
-<<<<<<< HEAD
 #include "utils.h"
+#include <SoftwareSerial.h>
 
 //pin definitions
-const int TRIG_PIN = 12;
-const int ECHO_PIN = 13;
+const int TX_PIN = 9;
+const int RX_PIN = 8;
 
-//detection config
-const float TRASH_DISTANCE_THRESHOLD = 10.0; // cm
+const uint8_t HEADER_BYTE = 0xFF;
+const uint16_t READ_TIMEOUT_MS = 200;
+const int ERROR_DISTANCE = -1;  // Error return value
 
-void initUltrasonicSensor() {
-  pinMode(TRIG_PIN, OUTPUT);
-  pinMode(ECHO_PIN, INPUT);
-  Serial.println("Ultrasonic Sensor: Initialized");
-  Serial.print("  Trash threshold: ");
-  Serial.print(TRASH_DISTANCE_THRESHOLD);
-  Serial.println(" cm");
-}
-
-float readDistance() {
-  //send trig pulse
-  digitalWrite(TRIG_PIN, LOW);
-  delayMicroseconds(2);
-  digitalWrite(TRIG_PIN, HIGH);
-  delayMicroseconds(10);
-  digitalWrite(TRIG_PIN, LOW);
-
-  //read echo duration
-  long duration = pulseIn(ECHO_PIN, HIGH, 30000); //timeout duration
-
-  if (duration == 0) {
-    return 999.9; //if timeout
-  }
-
-  //sound formula for distance.
-  float distance = (duration / 2.0) / 29.1;
-  return distance;
-}
-
-bool isTrashInPosition() {
-  float distance = readDistance();
-  return distance < TRASH_DISTANCE_THRESHOLD;
-}
-=======
-#include "utils.h"
-
-//pin definitions
-const int TRIG_PIN = 8;
-const int ECHO_PIN = 9;
+SoftwareSerial ultrasonicSensor(RX_PIN, TX_PIN);
 
 //config
 const float DETECTION_DISTANCE = 10.0;  //in cm
 
 void initUltrasonicSensor() {
-  pinMode(TRIG_PIN, OUTPUT);
-  pinMode(ECHO_PIN, INPUT);
+  ultrasonicSensor.begin(9600);
   
   Serial.println("Ultrasonic Sensor: Initialized");
   Serial.print("  Detection Distance: ");
@@ -61,25 +23,46 @@ void initUltrasonicSensor() {
   Serial.println(" cm");
 }
 
-float readDistance() {
-  digitalWrite(TRIG_PIN, LOW);
-  delayMicroseconds(2);
-  digitalWrite(TRIG_PIN, HIGH);
-  delayMicroseconds(10);
-  digitalWrite(TRIG_PIN, LOW);
-  
-  long duration = pulseIn(ECHO_PIN, HIGH, 30000);
-  
-  if (duration == 0) {
-    return 999.0;
+uint8_t readByte(uint8_t *buf, size_t len) {
+  size_t offset = 0, left = len;
+  uint8_t *buffer = buf;
+  long curr = millis();
+  while (left) {
+    if (ultrasonicSensor.available()) {
+      buffer[offset] = ultrasonicSensor.read();
+      offset++;
+      left--;
+    }
+    if (millis() - curr > READ_TIMEOUT_MS) {
+      break;
+    }
   }
-  
-  float distance = duration * 0.034 / 2;
-  return distance;
+  return offset;
+}
+
+float readDistance() {
+  uint8_t data[4] = { 0 };
+  uint8_t receivedByte = 0;
+  unsigned long startTime = millis();
+
+  while (millis() - startTime < READ_TIMEOUT_MS) {                      // Check if timeout
+    if (readByte(&receivedByte, 1) == 1 && receivedByte == HEADER_BYTE) {  // Find the header byte
+      data[0] = receivedByte;
+      if (readByte(&data[1], 3) == 3) {                     // Read the remaining 3 bytes
+        uint8_t checksum = data[0] + data[1] + data[2];  // Checksum
+        if (checksum == data[3]) {
+          uint16_t distance = (data[1] << 8) | data[2];  // Calculate and return the distance
+          return distance / 10; // convert distance from mm to cm
+        }
+      }
+    }
+    Serial.println("Error data");
+  }
+  Serial.println("Error Reading data timeout");
+  return ERROR_DISTANCE;
 }
 
 bool isTrashInPosition() {
   float distance = readDistance();
   return (distance < DETECTION_DISTANCE && distance > 0);
 }
->>>>>>> 0777700fb52d18640d2a6c12064bb87a4df791c3
