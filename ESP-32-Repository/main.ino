@@ -1,6 +1,6 @@
 #include <Arduino.h>
 #include <WiFi.h>
-#include "GPS-Tracking/utils.h"
+#include "src/GPS-Tracking/utils.h"
 
 const char* SSID     = "wifi_ssid";      // replace with wifi
 const char* PASSWORD = "wifi_password";
