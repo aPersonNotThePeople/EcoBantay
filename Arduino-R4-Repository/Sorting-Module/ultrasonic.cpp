@@ -40,7 +40,7 @@ uint8_t readByte(uint8_t *buf, size_t len) {
   return offset;
 }
 
-float readDistance() {
+float readDistanceFromUART() {
   uint8_t data[4] = { 0 };
   uint8_t receivedByte = 0;
   unsigned long startTime = millis();
@@ -60,6 +60,23 @@ float readDistance() {
   }
   Serial.println("Error Reading data timeout");
   return ERROR_DISTANCE;
+}
+
+float readDistance() {
+  digitalWrite(ULTRASONIC_TRIGGER, LOW);
+  delayMicroseconds(2);
+  digitalWrite(ULTRASONIC_TRIGGER, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(ULTRASONIC_TRIGGER, LOW);
+  
+  long duration = pulseIn(ULTRASONIC_ECHO, HIGH, 30000);
+  
+  if (duration == 0) {
+    return 999.0;
+  }
+  
+  float distance = duration * 0.034 / 2;
+  return distance;
 }
 
 bool isTrashInPosition() {

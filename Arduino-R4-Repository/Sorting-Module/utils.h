@@ -22,6 +22,7 @@ extern bool metalDetected;
 
 //ultrasonic
 void initUltrasonicSensor();
+float readDistanceFromUART();
 float readDistance();
 bool isTrashInPosition();
 
