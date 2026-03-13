@@ -4,6 +4,7 @@
 #define ENABLE_USER_AUTH
 #define ENABLE_DATABASE
 
+# include "..\..\..\config.h"
 #include <Arduino.h>
 #include <WiFi.h>
 #include <WiFiClientSecure.h>

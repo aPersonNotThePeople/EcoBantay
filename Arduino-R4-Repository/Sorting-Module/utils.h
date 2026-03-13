@@ -1,6 +1,7 @@
 #ifndef UTILS_H
 #define UTILS_H
 
+# include "..\..\config.h"
 #include <Arduino.h>
 
 //system states
