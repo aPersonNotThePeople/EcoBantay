@@ -41,6 +41,10 @@ void returnRightMotor();
 void returnLeftMotor();
 void sortMotorStop();
 
+// solenoid lock
+void initSolenoidLock();
+void openSolenoidLock(int solenoid_lock_number, float open_duration);
+
 //sorting system
 void handleIdle();
 void handleConveyorRunning();

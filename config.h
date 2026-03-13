@@ -34,8 +34,10 @@ extern const int INDUCTIVE_PROXIMITY_RX;
 extern const int STEPPER_MOTOR1_ENABLE;
 extern const int STEPPER_MOTOR2_ENABLE;
 
-extern const int SOLENOID_LOCK1_ENABLE;
-extern const int SOLENOID_LOCK2_ENABLE;
+// Solenoid
+extern const int SOLENOID_LOCK1_RELAY;
+extern const int SOLENOID_LOCK1_RELAY;
+extern const float MAXIMUM_OPEN_DURATION;
 
 // For Communication with ESP32
 extern const int RX;

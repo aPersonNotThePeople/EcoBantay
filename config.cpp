@@ -32,8 +32,10 @@ const int INDUCTIVE_PROXIMITY_RX = A0;
 const int STEPPER_MOTOR1_ENABLE = A1;
 const int STEPPER_MOTOR2_ENABLE = A2;
 
-const int SOLENOID_LOCK1_ENABLE = A3;
-const int SOLENOID_LOCK2_ENABLE = A4;
+// Solenoid
+const int SOLENOID_LOCK1_RELAY = A3;
+const int SOLENOID_LOCK2_RELAY = A4;
+const float MAXIMUM_OPEN_DURATION = 5.00;
 
 // For Communication with ESP32
 const int RX = 0;
