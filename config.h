@@ -23,8 +23,10 @@ extern const int SCAN_DURATION;
 extern const int SORT_DURATION;
 extern const int RETURN_DURATION;
 
-// Stepper Motor Speed
+// Stepper Motor Variables
 extern const int DEFAULT_SPEED;
+extern const int STEPS_PER_REVOLUTION;
+extern const int ROTATE_DEGREE;
 
 // Pin Config
 extern const int INDUCTIVE_PROXIMITY_RX;

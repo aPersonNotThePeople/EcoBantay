@@ -16,12 +16,15 @@ const int METAL_THRESHOLD = 500;
 const float DETECTION_DISTANCE = 10.0; // 10 cm
 
 // Durations
-extern const int SCAN_DURATION = 500;
-extern const int SORT_DURATION = 1500;
-extern const int RETURN_DURATION = 1000;
+const int SCAN_DURATION = 500;
+const int SORT_DURATION = 1500;
+const int RETURN_DURATION = 1000;
 
-// Stepper Motor Speed
-extern const int DEFAULT_SPEED = 2000; // 2000mw
+// Stepper Motor Variables
+const int DEFAULT_SPEED = 2000; // 2 ms between step
+const int STEPS_PER_REVOLUTION = 200;
+const int ROTATE_DEGREE = 90;
+
 
 // Pin Config
 const int INDUCTIVE_PROXIMITY_RX = A0;

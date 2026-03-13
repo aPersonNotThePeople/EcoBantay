@@ -1,46 +1,53 @@
 #include "utils.h"
 
-//pin definitions
-const int SORT_MOTOR_IN1 = 8;
-const int SORT_MOTOR_IN2 = 9;
-const int SORT_MOTOR_PWM = 10;
-
-//speed config
-const int DEFAULT_SPEED = 200;
-
 void initSortingMotor() {
-  pinMode(SORT_MOTOR_IN1, OUTPUT);
-  pinMode(SORT_MOTOR_IN2, OUTPUT);
-  pinMode(SORT_MOTOR_PWM, OUTPUT);
+  pinMode(STEPPER_MOTOR1_ENABLE, OUTPUT);
+  pinMode(STEPPER_MOTOR1_DIR, OUTPUT);
+  pinMode(STEPPER_MOTOR1_STP, OUTPUT);
+
+  pinMode(STEPPER_MOTOR2_ENABLE, OUTPUT);
+  pinMode(STEPPER_MOTOR2_DIR, OUTPUT);
+  pinMode(STEPPER_MOTOR2_STP, OUTPUT);
+
+  digitalWrite(STEPPER_MOTOR2_DIR, HIGH);
   
   sortMotorStop();
   
-  Serial.println("Sorting Motor: Initialized");
+  Serial.println("Sorting Motors: Initialized");
   Serial.print("  Default Speed: ");
   Serial.println(DEFAULT_SPEED);
 }
 
-void sortMotorRight(int speed) {
-  speed = constrain(speed, 0, 255);
-  digitalWrite(SORT_MOTOR_IN1, HIGH);
-  digitalWrite(SORT_MOTOR_IN2, LOW);
-  analogWrite(SORT_MOTOR_PWM, speed);
-  Serial.print("Sort Motor RIGHT at speed: ");
-  Serial.println(speed);
+void returnLeftMotor() {
+  // Divded by four to spin 90 degrees 
+  delay(1000);
+  digitalWrite(STEPPER_MOTOR1_ENABLE, HIGH);
+  for (int x = 0; x < STEPS_PER_REVOLUTION / (360/ROTATE_DEGREE); x++) {
+    digitalWrite(stepPin, HIGH);
+    delayMicroseconds(DEFAULT_SPEED);
+    digitalWrite(stepPin, LOW);
+    delayMicroseconds(DEFAULT_SPEED);
+  }
+  delay(2000);
+  digitalWrite(STEPPER_MOTOR1_ENABLE, LOW)
 }
 
-void sortMotorLeft(int speed) {
-  speed = constrain(speed, 0, 255);
-  digitalWrite(SORT_MOTOR_IN1, LOW);
-  digitalWrite(SORT_MOTOR_IN2, HIGH);
-  analogWrite(SORT_MOTOR_PWM, speed);
-  Serial.print("Sort Motor LEFT at speed: ");
-  Serial.println(speed);
+void returnRightMotor() {
+  // Divded by four to spin 90 degrees 
+  delay(1000);
+  digitalWrite(STEPPER_MOTOR2_ENABLE, HIGH);
+  for (int x = 0; x < STEPS_PER_REVOLUTION / (360/ROTATE_DEGREE); x++) {
+    digitalWrite(stepPin, HIGH);
+    delayMicroseconds(DEFAULT_SPEED);
+    digitalWrite(stepPin, LOW);
+    delayMicroseconds(DEFAULT_SPEED);
+  }
+  delay(2000);
+  digitalWrite(STEPPER_MOTOR2_ENABLE, LOW)
 }
 
 void sortMotorStop() {
-  digitalWrite(SORT_MOTOR_IN1, LOW);
-  digitalWrite(SORT_MOTOR_IN2, LOW);
-  analogWrite(SORT_MOTOR_PWM, 0);
+  digitalWrite(STEPPER_MOTOR1_ENABLE, LOW);
+  digitalWrite(STEPPER_MOTOR2_ENABLE, LOW);
   Serial.println("Sort Motor STOPPED");
 }

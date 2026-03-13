@@ -37,8 +37,8 @@ void conveyorStop();
 
 //sorting motor
 void initSortingMotor();
-void sortMotorRight(int speed);
-void sortMotorLeft(int speed);
+void returnRightMotor();
+void returnLeftMotor();
 void sortMotorStop();
 
 //sorting system
