@@ -39,4 +39,5 @@ bool checkAuthentication(bool printAuthInfo=false);
 void writeDatabase(String database_location, String stringValue, const unsigned long sendInterval);
 void writeDatabase(String database_location, int intValue, const unsigned long sendInterval);
 void writeDatabase(String database_location, float floatValue, const unsigned long sendInterval);
+void writeTrashCapacityToFirebase(float distanceCm, float capacityPercent);
 #endif

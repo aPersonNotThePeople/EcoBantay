@@ -1,8 +1,40 @@
 #include "arduino-log-receiver.h"
+#include "../Firebase-Module/firebase_utils.h"
 
 // TODO: Move UART2 instance selection into shared board configuration.
 static HardwareSerial ArduinoLogSerial(2);
 static String lineBuffer;
+
+static bool parseDistanceCm(const String& message, float& distanceCm) {
+  int keyPos = message.indexOf("distance=");
+  if (keyPos < 0) {
+    return false;
+  }
+
+  keyPos += 9;
+  int endPos = message.indexOf(',', keyPos);
+  String distanceToken = (endPos >= 0) ? message.substring(keyPos, endPos) : message.substring(keyPos);
+  distanceToken.trim();
+
+  if (distanceToken.length() == 0) {
+    return false;
+  }
+
+  distanceCm = distanceToken.toFloat();
+  return distanceCm > 0.0f;
+}
+
+static float computeFillPercent(float distanceCm) {
+  const float BIN_HEIGHT_CM = 30.0f;
+  float percent = ((BIN_HEIGHT_CM - distanceCm) / BIN_HEIGHT_CM) * 100.0f;
+  if (percent < 0.0f) {
+    percent = 0.0f;
+  }
+  if (percent > 100.0f) {
+    percent = 100.0f;
+  }
+  return percent;
+}
 
 static void handleLogLine(const String& line) {
   if (!line.startsWith("LOG|")) {
@@ -35,6 +67,12 @@ static void handleLogLine(const String& line) {
   Serial.print(module);
   Serial.print(" msg=");
   Serial.println(message);
+
+  float distanceCm = 0.0f;
+  if (module == "SORTING" && parseDistanceCm(message, distanceCm)) {
+    float fillPercent = computeFillPercent(distanceCm);
+    writeTrashCapacityToFirebase(distanceCm, fillPercent);
+  }
 }
 
 void initArduinoLogReceiver(uint32_t baudRate, int rxPin, int txPin) {
