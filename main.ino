@@ -14,8 +14,18 @@ void setup() {
   WiFi.disconnect(true);
   delay(500);
 
-  if(scanWiFi(SSID, PASSWORD)) {
-      connectWiFi(SSID, PASSWORD);
+  if (scanWiFi(SSID, PASSWORD)) {
+      bool connected = connectWiFi(SSID, PASSWORD);
+      int retryCount = 0;
+      while (!connected && retryCount < 3) {
+          Serial.println("WiFi connection failed, retrying...");
+          delay(1000);
+          connected = connectWiFi(SSID, PASSWORD);
+          retryCount++;
+      }
+      if (!connected) {
+          Serial.println("WiFi connection failed after retries");
+      }
   }
   else {
       Serial.println("WiFI not found");
