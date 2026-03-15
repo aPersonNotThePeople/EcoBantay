@@ -176,6 +176,36 @@ If you're unsure about any step in the workflow:
 2. Ask in the team channel
 3. Don't proceed if uncertain - better to ask than to break the workflow
 
+```
+
 ---
 
+## Coding Conventions
+
+### 1. Naming Conventions
+
+1. **Filename** is `all-small-but-with-space-as-dash`
+2. **Function** is `camelCase`
+3. **Constant** is `ALL_CAPS`
+4. **Variable** is `small_case`
+5. **Class name** is `CapitalButNoSpace`
+
+### 2. File Repository Structure
+```
+main.ino
+module-1/
+  ├── process-1.cpp
+  └── utils.h
+module-2/
+  └── ...
+```
+
+---
+
+## Commit Conventions
+```
+This is how we commit our changes to github
+https://gist.github.com/qoomon/5dfcdf8eec66a051ecd85625518cfd13
+
+```
 **Last Updated:** January 2026

@@ -1,7 +1,7 @@
 #ifndef UTILS_H
 #define UTILS_H
 
-bool scanWiFi(char* ssid, char* password);
-bool connectWiFi(char* ssid, char* password);
+bool scanWiFi(const char* ssid, const char* password);
+bool connectWiFi(const char* ssid, const char* password);
 
 #endif

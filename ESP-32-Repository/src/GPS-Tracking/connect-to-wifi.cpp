@@ -15,9 +15,10 @@ bool scanWiFi(char* ssid, char* password) {
   bool target_found = false;
   
   for (int i = 0; i < network_count; i++) {
-    if (WiFi.SSID(i) == String(ssid)) {
+    if (WiFi.SSID(i).equals(ssid)) {
       target_found = true;
       Serial.printf("target WiFi '%s' found!\n", ssid);
+      break;
     }
     
     delay(10);
