@@ -1,5 +1,6 @@
 #include <Arduino.h>
 #include "utils.h"
+#include "Communication-Module/esp32-log-bridge.h"
 
 void setup() {
   Serial.begin(115200);
@@ -11,6 +12,9 @@ void setup() {
   initConveyorSystem();
   initUltrasonicSensor();
   initMetalDetector();
+  initEsp32LogBridge();
+
+  sendEsp32Log("INFO", "SYSTEM", "Arduino R4 sorting system booted");
   
   Serial.println("\nAll modules initialized. Starting sorting system...\n");
 }
@@ -45,6 +49,7 @@ void loop() {
   static unsigned long lastPrint = 0;
   if (millis() - lastPrint > 1000) {
     printStatus();
+    sendEsp32StatusLog(getStateName(currentState), readDistance(), readProximitySensor());
     lastPrint = millis();
   }
 
@@ -56,6 +61,7 @@ void loop() {
       sortMotorStop();
       currentState = IDLE;
       Serial.println("\n>>> EMERGENCY STOP <<<\n");
+      sendEsp32Log("WARN", "SYSTEM", "Emergency stop triggered from serial command");
     }
   }
 }
