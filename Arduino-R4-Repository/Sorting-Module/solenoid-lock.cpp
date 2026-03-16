@@ -6,8 +6,16 @@ void initSolenoidLock() {
 }
 
 // open duration is in milliseconds
-void openSolenoidLock(int solenoid_pin_number, float open_duration){
+void openAndCloseSolenoidLock(int solenoid_pin_number, int open_duration){
     digitalWrite(solenoid_pin_number, HIGH); //opens
     delay(constrain(open_duration, 500, MAXIMUM_OPEN_DURATION));
     digitalWrite(solenoid_pin_number, LOW); //closes
+}
+
+void openSolenoidLock(int solenoid_pin_number) {
+    digitalWrite(solenoid_pin_number, HIGH);
+}
+
+void closeSolenoidLock(int solenoid_pin_number) {
+    digitalWrite(solenoid_pin_number, LOW)
 }
