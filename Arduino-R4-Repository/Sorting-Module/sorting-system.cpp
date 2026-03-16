@@ -1,9 +1,5 @@
 #include "utils.h"
 
-const int SCAN_DURATION = 500;
-const int SORT_DURATION = 1500;
-const int RETURN_DURATION = 1000;
-
 SortState currentState = IDLE;
 unsigned long stateStartTime = 0;
 bool metalDetected = false;
