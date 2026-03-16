@@ -17,7 +17,7 @@ const float DETECTION_DISTANCE = 10.0; // 10 cm
 
 // Durations
 const int SCAN_DURATION = 500;
-const int SORT_DURATION = 1500;
+const int SORT_DURATION = 2000;
 const int RETURN_DURATION = 1000;
 
 // Stepper Motor Variables
@@ -35,11 +35,11 @@ const int STEPPER_MOTOR2_ENABLE = A2;
 // Solenoid
 const int SOLENOID_LOCK1_RELAY = A3;
 const int SOLENOID_LOCK2_RELAY = A4;
-const float MAXIMUM_OPEN_DURATION = 5.00;
+const int MAXIMUM_OPEN_DURATION = 2000;
 
 // For Communication with ESP32
 const int RX = 0;
-const int TX - 1;
+const int TX = 1;
 
 // For the Waterproof Ultrasonic Proximity Sensor
 const int ULTRASONIC_RECEIVER = 2;
@@ -49,8 +49,7 @@ const int ULTRASONIC_TRANSMITTER = 3;
 const int STEPPER_MOTOR1_DIR = 4;
 const int STEPPER_MOTOR1_STP = 5;
 const int STEPPER_MOTOR2_DIR = 6;
-const int 
-STEPPER_MOTOR2_STP = 7;
+const int STEPPER_MOTOR2_STP = 7;
 
 // Conveyors
 const int CONVEYOR_MOTORS_IN1 = 8;

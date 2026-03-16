@@ -38,13 +38,14 @@ void conveyorStop();
 
 //sorting motor
 void initSortingMotor();
-void returnRightMotor();
-void returnLeftMotor();
+void returnTrapdoor(int stepper_motor_enable, int stepper_motor_stp, int solenoid_lock_pin);
 void sortMotorStop();
 
 // solenoid lock
 void initSolenoidLock();
-void openSolenoidLock(int solenoid_lock_number, float open_duration);
+void openAndCloseSolenoidLock(int solenoid_pin_number, int open_duration);
+void openSolenoidLock(int solenoid_lock_number);
+void closeSolenoidLock(int solenoid_lock_number);
 
 //sorting system
 void handleIdle();
