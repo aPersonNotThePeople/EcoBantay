@@ -55,9 +55,10 @@ extern const int
 STEPPER_MOTOR2_STP;
 
 // Conveyors
-extern const int CONVEYOR_MOTORS_IN1;
-extern const int CONVEYOR_MOTORS_IN2;
-extern const int CONVEYOR_MOTORS_ENABLE;
+extern const int CONVEYOR_MOTOR_IN1;
+extern const int CONVEYOR_MOTOR_IN2;
+extern const int CONVEYOR_MOTOR_ENABLE;
+extern const int MAXIMUM_CONVEYOR_SPEED;
 
 // Ultrasonic Proximity Sensor
 extern const int ULTRASONIC_ECHO;

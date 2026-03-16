@@ -52,10 +52,10 @@ const int STEPPER_MOTOR2_DIR = 6;
 const int STEPPER_MOTOR2_STP = 7;
 
 // Conveyors
-const int CONVEYOR_MOTORS_IN1 = 8;
-const int CONVEYOR_MOTORS_IN2 = 9;
-const int CONVEYOR_MOTORS_ENABLE = 10;
-
+const int CONVEYOR_MOTOR_IN1 = 8;
+const int CONVEYOR_MOTOR_IN2 = 9;
+const int CONVEYOR_MOTOR_ENABLE = 10;
+const int MAXIMUM_CONVEYOR_SPEED = 200;
 // Ultrasonic Proximity Sensor
 const int ULTRASONIC_ECHO = 11;
 const int ULTRASONIC_TRIGGER = 12;
