@@ -18,33 +18,21 @@ void initSortingMotor() {
   Serial.println(DEFAULT_SPEED);
 }
 
-void returnLeftMotor() {
+void returnTrapdoor(int stepper_motor_enable, int stepper_motor_stp, int solenoid_lock_pin) {
   // Divded by four to spin 90 degrees 
-  delay(1000);
-  digitalWrite(STEPPER_MOTOR1_ENABLE, HIGH);
+  openSolenoidLock(solenoid_lock_pin);
+  digitalWrite(stepper_motor_enable, HIGH);
   for (int x = 0; x < STEPS_PER_REVOLUTION / (360/ROTATE_DEGREE); x++) {
-    digitalWrite(stepPin, HIGH);
+    digitalWrite(stepper_motor_stp, HIGH);
     delayMicroseconds(DEFAULT_SPEED);
-    digitalWrite(stepPin, LOW);
+    digitalWrite(stepper_motor_stp, LOW);
     delayMicroseconds(DEFAULT_SPEED);
   }
-  delay(2000);
-  digitalWrite(STEPPER_MOTOR1_ENABLE, LOW)
+  delay(500);
+  closeSolenoidLock(solenoid_lock_pin);
+  digitalWrite(stepper_motor_enable, LOW)
 }
 
-void returnRightMotor() {
-  // Divded by four to spin 90 degrees 
-  delay(1000);
-  digitalWrite(STEPPER_MOTOR2_ENABLE, HIGH);
-  for (int x = 0; x < STEPS_PER_REVOLUTION / (360/ROTATE_DEGREE); x++) {
-    digitalWrite(stepPin, HIGH);
-    delayMicroseconds(DEFAULT_SPEED);
-    digitalWrite(stepPin, LOW);
-    delayMicroseconds(DEFAULT_SPEED);
-  }
-  delay(2000);
-  digitalWrite(STEPPER_MOTOR2_ENABLE, LOW)
-}
 
 void sortMotorStop() {
   digitalWrite(STEPPER_MOTOR1_ENABLE, LOW);
