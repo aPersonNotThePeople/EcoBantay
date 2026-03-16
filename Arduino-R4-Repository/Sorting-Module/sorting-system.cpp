@@ -41,11 +41,9 @@ void handleScanningMetal() {
     if (metalDetected) {
       Serial.println(">>> METAL - Sorting RIGHT <<<");
       currentState = SORT_METAL;
-      sortMotorRight(200);
     } else {
       Serial.println(">>> NON-METAL - Sorting LEFT <<<");
       currentState = SORT_NON_METAL;
-      sortMotorLeft(200);
     }
     stateStartTime = millis();
   }
@@ -54,20 +52,24 @@ void handleScanningMetal() {
 void handleSortMetal() {
   if (millis() - stateStartTime >= SORT_DURATION) {
     sortMotorStop();
+    delay(500);
+    openAndCloseSolenoidLock(SOLENOID_LOCK1_RELAY, 1000); // Opens lock, which drops the trapdoor
+    returnTrapdoor(STEPPER_MOTOR1_ENABLE, STEPPER_MOTOR1_STP, SOLENOID_LOCK1_RELAY)
     Serial.println("Metal sorted");
     currentState = RETURNING;
     stateStartTime = millis();
-    sortMotorLeft(200);
   }
 }
 
 void handleSortNonMetal() {
   if (millis() - stateStartTime >= SORT_DURATION) {
     sortMotorStop();
+    delay(500);
+    openAndCloseSolenoidLock(SOLENOID_LOCK2_RELAY, 1000); // Opens lock, which drops the trapdoor
+    returnTrapdoor(STEPPER_MOTOR2_ENABLE, STEPPER_MOTOR2_STP, SOLENOID_LOCK2_RELAY)
     Serial.println("Non-metal sorted");
     currentState = RETURNING;
     stateStartTime = millis();
-    sortMotorRight(200);
   }
 }
 
